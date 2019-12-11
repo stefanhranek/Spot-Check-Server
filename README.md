@@ -163,9 +163,9 @@ SkateSpot model
 
 The url to your repository and to your deployed project
 
-[Client repository Link]()
+[Client repository Link](https://github.com/stefanhranek/SpotCheck-Client)
 
-[Server repository Link]()
+[Server repository Link](https://github.com/stefanhranek/Spot-Check-Server)
 
 [Deployed App Link](http://heroku.com)
 
