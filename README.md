@@ -38,17 +38,17 @@ User profile:
 
 ## Routes (React App)
 
-| Path                       | Component         | Permissions | Behavior                                                                                                   |
-| -------------------------- | ----------------- | ----------- | ---------------------------------------------------------------------------------------------------------- |
-| `/`                        | SplashPage        | public      | Home page, app name, basic information about app, buttons for signup & login                               |
-| `/signup`             | SignupPage        | anon only   | Signup form, back button, navigate to homepage after signup                                                |
-| `/login`              | LoginPage         | anon only   | Login form, back button, navigate to homepage after login                                                  |
-| `/skatespots/map`          | Map               | user only   | Shows map view of skate spots near user location                                                           |
+| Path                    | Component         | Permissions | Behavior                                                                                                   |
+| ----------------------- | ----------------- | ----------- | ---------------------------------------------------------------------------------------------------------- |
+| `/`                     | SplashPage        | public      | Home page, app name, basic information about app, buttons for signup & login                               |
+| `/signup`               | SignupPage        | anon only   | Signup form, back button, navigate to homepage after signup                                                |
+| `/login`                | LoginPage         | anon only   | Login form, back button, navigate to homepage after login                                                  |
+| `/skatespots/map`       | Map               | user only   | Shows map view of skate spots near user location                                                           |
 | `/skatespots/add-spot`  | AddSpotPage       | user only   | Add a new skate spot to map database                                                                       |
-| `/skatespots/favorites`    | FavoritesListPage | user only   | Shows a list of favorite skate spots                                                                       |
-| `/skatespots/spot/:id`     | SpotDetailsPage   | user only   | Details of a skate spot, back button                                                                       |
-| `/profile`      | ProfilePage       | user only   | View user profile page, back button, edit profile button                                                   |
-| `/edit-profile` | EditProfilePage   | user only   | Edit user profile page, back button, information form, upload picture & media, save changes , edit profile |
+| `/skatespots/favorites` | FavoritesListPage | user only   | Shows a list of favorite skate spots                                                                       |
+| `/skatespots/spot/:id`  | SpotDetailsPage   | user only   | Details of a skate spot, back button                                                                       |
+| `/profile`              | ProfilePage       | user only   | View user profile page, back button, edit profile button                                                   |
+| `/edit-profile`         | EditProfilePage   | user only   | Edit user profile page, back button, information form, upload picture & media, save changes , edit profile |
 
 ## Components
 
@@ -68,10 +68,9 @@ User profile:
 
 - EditProfilePage
 
-- Navbar  -  Navigation panel, path to the following routes: /map, /favorites, /profile, /logout 
+- Navbar - Navigation panel, path to the following routes: /map, /favorites, /profile, /logout
 
-
-- HamburgerMenu
+* HamburgerMenu
 
 ## Services
 
@@ -127,7 +126,7 @@ SkateSpot model
    indoor: {type: Boolean, required: true},
    images: [String],
    creator: {type: Schema.Types.ObjectId,ref:'User'},
-   location: {type: String, coordinates: [] } 
+   location: {type: String, coordinates: [] }
  }
 ```
 
@@ -135,21 +134,21 @@ SkateSpot model
 
 ## API Endpoints (backend routes)
 
-| HTTP Method | URL                            | Request Body                      | Success status | Error Status | Description                                                                                                                     |
-| ----------- | ------------------------------ | --------------------------------- | -------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------- |
-| GET         | `/auth/profile`                |                                   | 200            | 404          | Check if user is logged in and return profile page                                                                              |
-| POST        | `/auth/signup`                 | {username, email, password}       | 201            | 404          | Checks if fields not empty (422) and user not exists (409), then create user with encrypted password, and store user in session |
-| POST        | `/auth/login`                  | {username, password}              | 200            | 401          | Checks if fields not empty (422), if user exists (404), and if password matches (404), then stores user in session              |
-| POST        | `/auth/logout`                 |                                   | 204            | 400          | Logs out the user                                                                                                               |
-| GET         | `/skatespots/map?long=0&lat=0`              |                                   |     200           | 400          | Show map view of skate spots by current location                                                                                                  |
-| GET         | `/skatespots/favorites`        |                        |     200           | 400          | Show list of favorite skate spots                                                                                               |
-| GET         | `/skatespots/spot-details/:id` |                         |        200        | 400             | Show specific skate spot                                                                                                        |
-| PUT         | `/skatespots/:id` | { imageUrl }                          |                |              | Add image to spot details                                                                                                       |
-| POST        | `/skatespots`         | { name, type, status, indoor, description, location }                                | 201            | 400          | Create and save a new skate spot                                                                                                |
-| DELETE      | `/skatespots/:id`       |                           | 204            | 400          | Delete skate spot from favorites list                                                                                           |
-| GET         | `/user`          |                       |    200            | 400          | Get current user profile                                                                                                               |
-| PUT         | `/user` | {username, password, city, image} |       200         | 400          | Update current user profile                                                                                                          |
-| PATCH         | `/user` | {spotId} |       200         | 400          | Update current user's favorite spots                                                                                                          |
+| HTTP Method | URL                            | Request Body                                          | Success status | Error Status | Description                                                                                                                     |
+| ----------- | ------------------------------ | ----------------------------------------------------- | -------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------- |
+| GET         | `/auth/profile`                |                                                       | 200            | 404          | Check if user is logged in and return profile page                                                                              |
+| POST        | `/auth/signup`                 | {username, email, password}                           | 201            | 404          | Checks if fields not empty (422) and user not exists (409), then create user with encrypted password, and store user in session |
+| POST        | `/auth/login`                  | {username, password}                                  | 200            | 401          | Checks if fields not empty (422), if user exists (404), and if password matches (404), then stores user in session              |
+| POST        | `/auth/logout`                 |                                                       | 204            | 400          | Logs out the user                                                                                                               |
+| GET         | `/skatespots/map?long=0&lat=0` |                                                       | 200            | 400          | Show map view of skate spots by current location                                                                                |
+| GET         | `/skatespots/favorites`        |                                                       | 200            | 400          | Show list of favorite skate spots                                                                                               |
+| GET         | `/skatespots/spot-details/:id` |                                                       | 200            | 400          | Show specific skate spot                                                                                                        |
+| PUT         | `/skatespots/:id`              | { imageUrl }                                          |                |              | Add image to spot details                                                                                                       |
+| POST        | `/skatespots`                  | { name, type, status, indoor, description, location } | 201            | 400          | Create and save a new skate spot                                                                                                |
+| DELETE      | `/skatespots/:id`              |                                                       | 204            | 400          | Delete skate spot from favorites list                                                                                           |
+| GET         | `/user`                        |                                                       | 200            | 400          | Get current user profile                                                                                                        |
+| PUT         | `/user`                        | {username, password, city, image}                     | 200            | 400          | Update current user profile                                                                                                     |
+| PATCH       | `/user`                        | {spotId}                                              | 200            | 400          | Update current user's favorite spots                                                                                            |
 
 <br>
 

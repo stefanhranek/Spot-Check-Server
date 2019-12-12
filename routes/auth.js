@@ -12,19 +12,22 @@ const {
   validationLoggin,
 } = require('../helpers/middlewares');
 
-//  GET    '/me'
+///////////////////////////////////////////////////////////////// Left here from boilerplate
+///////////////////////////////////////////////////////////////// unsure of its use
+//  GET    '/me'  
 router.get('/me', isLoggedIn, (req, res, next) => {
   req.session.currentUser.password = '*';
   res.json(req.session.currentUser);
 });
+////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
 
 //  POST    '/signup'
-router.post(
-  '/signup',
-  isNotLoggedIn,
-  validationLoggin,
-  async (req, res, next) => {
-    const { username, password } = req.body;
+router.post('/signup', isNotLoggedIn, validationLoggin, async (req, res, next) => {
+    const { username, password, email } = req.body;
+
+    console.log('skajfhashfjashkjf', req.body);
+    
 
     try {
       // projection
@@ -34,10 +37,10 @@ router.post(
       else {
         const salt = bcrypt.genSaltSync(saltRounds);
         const hashPass = bcrypt.hashSync(password, salt);
-        const newUser = await User.create({ username, password: hashPass });
+        const newUser = await User.create({ username, password: hashPass, email });
         req.session.currentUser = newUser;
         res
-          .status(200) //  OK
+          .status(201) //  OK
           .json(newUser);
       }
     } catch (error) {
@@ -75,7 +78,7 @@ router.post('/logout', isLoggedIn, (req, res, next) => {
   const { username } = req.session.currentUser;
   req.session.destroy();
   res
-    .status(200) //  No Content
+    .status(204) //  No Content
     .json({ message: `User '${username}' logged out - session destroyed` });
   return;
 });

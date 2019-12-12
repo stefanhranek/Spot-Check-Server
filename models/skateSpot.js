@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const userSchema = new Schema(
+const skateSpotSchema = new Schema(
   {
     name: {type: String, required: true},
     type: {type: String, required: true, enum: ['park', 'street', 'diy']},
@@ -19,6 +19,6 @@ const userSchema = new Schema(
   }
 );
 
-const User = mongoose.model("User", userSchema);
+const SkateSpot = mongoose.model("SkateSpot", skateSpotSchema);
 
-module.exports = User;
+module.exports = SkateSpot;
