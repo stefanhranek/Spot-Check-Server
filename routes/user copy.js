@@ -28,25 +28,27 @@ router.get('/:id', isLoggedIn, (req,res,next) => {
 
 //  PUT    '/:id'
 //  Update current user profile
-router.put('/', isLoggedIn, async (req,res,next) => {
+router.put('/', isLoggedIn, (req,res,next) => {
     const { _id } = req.session.currentUser;
     const { username, password, city, image } = req.body;
 
-    try {
-        const usernameExists = await User.findOne( { username } );
+    User.findOne( { username } )
+      .then( (usernameExists) => {
+
         if (usernameExists) {
-            next(createError(400));
-            return;
+          next(createError(400));
+          return;
         }
-        
-        const updatedUser = await User.findByIdAndUpdate( _id, { username, password, city, image }, {new: true} )
-        res.status(200).json(updatedUser)
 
+        User.findByIdAndUpdate( _id, { username, password, city, image }, {new: true} )
+          .then( (updatedUser) => {
 
-    }
-    catch (error) {
-        res.status(400).json(err)
-    }
+            res.status(200).json(updatedUser)
+          })
+          .catch( (err) => console.log(err));
+
+      })
+      .catch( (err) => console.log(err));
 })
 
 
