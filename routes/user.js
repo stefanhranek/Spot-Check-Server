@@ -15,14 +15,31 @@ const {
  
 
 
-//  GET    '/'  
+//  GET    '/:id'  
 //  Get current user profile
+router.get('/:id', isLoggedIn, (req,res,next) => {
+    const { id } = req.params;
+    User.findById(id)
+        .then((response) => {
+            res.status(200).json(response)
+        })
+        .catch((err) => res.status(400).json(err))
+})
 
-
-//  PUT    '/'
+//  PUT    '/:id'
 //  Update current user profile
+router.put('/:id', isLoggedIn, (req,res,next) => {
+    const { id } = req.params;
+    const { username, password, city, image } = req.body;
+    User.findByIdAndUpdate(id)
+        .then((response) => {
+            res.status(200).json(response)
+        })
+        .catch((err) => res.status(400).json(err))
+})
 
-//  PATCH    '/'  
+
+//  PATCH    ':id/'  
 //  Update current user's favorite spots
 
 router.patch('/', isLoggedIn, (req,res,next) => {
