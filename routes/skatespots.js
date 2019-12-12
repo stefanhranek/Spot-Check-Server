@@ -19,30 +19,69 @@ const {
 
 
 //  GET    '/favorites'  
-//  Show list of favorite skate spots
+//  Show list of the user's favorite skate spots
+router.get('/favorites', isLoggedIn, (req, res, next) => {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      res.status(500).json({ message: 'Specified task id is invalid' });
+      return;
+    }
 
+    const userId = req.session.currentUser._id;
+  
+    User.findOne( userId, { $pull:{ favorites: id } } )
+      .then( (favoritesList) => {
+        res.status(200).json( favoritesList );
+      })
+      .catch( (err) => {
+        res.status(400).json(err);
+      });
+  
+  
+  })
 
 //  GET    '/spot-details/:id'
 //  Show specific skate spot
-
+router.get('/spot-details/:id', isLoggedIn, (req,res,next) => {
+    const { id } = req.params;
+    SkateSpot.findById(id)
+        .then((response) => {
+            res.status(200).json(response)
+        })
+        .catch((err) => res.status(400).json(err))
+})
 
 //  PUT    '/skatespots/:id'  
-//  Add image to spot details
+//  Add image to spot details *** Backlog - Uses Cloudinary
 
 
 //  POST    '/'
 //  Create and save a new skate spot
-router.post('/', (req, res, next) => {
+// router.post('/', isLoggedIn, (req, res, next) => {
+//     const { name, type, status, indoor, description, location } = req.body;
+
+//     const newSkateSpot = SkateSpot.create({ name, type, status, indoor, description, location });
+//         req.session.currentUser = newUser;
+//         res
+//           .status(201) //  OK
+//           .json(newSkateSpot);
+
+//     },
+//   );
+
+  
+
+  router.post('/', isLoggedIn, (req, res, next) => {
     const { name, type, status, indoor, description, location } = req.body;
-
-    const newSkateSpot = SkateSpot.create({ name, type, status, indoor, description, location });
-        req.session.currentUser = newUser;
-        res
-          .status(201) //  OK
-          .json(newSkateSpot);
-
-    },
-  );
+  
+    SkateSpot.create({ name, type, status, indoor, description, location })
+    .then( (newSkateSpot) => {
+        res.status(201).json( newSkateSpot );
+      })
+      .catch( (err) => {
+        res.status(400).json(err);
+      });
+ 
+  });
 
 //  DELETE    '/:id'
 //  Delete skate spot from favorites list
@@ -51,7 +90,7 @@ router.delete('/:id', isLoggedIn, (req, res, next) => {
     const { id } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      res.status(500).json({ message: 'Specified task id is invalid' });
+      res.status(500).json({ message: 'Specified Skate Spot id is invalid' });
       return;
     }
 
