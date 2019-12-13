@@ -65,7 +65,7 @@ router.patch('/', isLoggedIn, (req,res,next) => {
 
     const userId = req.session.currentUser._id;
   
-    User.findOneAndUpdate( userId, { $push:{ favorites: spotId } }, {new: true} )
+    User.findByIdAndUpdate( userId, { $push:{ favorites: spotId } }, {new: true} )
       .then( (updatedUser) => {
         res.status(201).json(updatedUser);
       })
