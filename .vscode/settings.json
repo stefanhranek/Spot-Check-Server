@@ -1,5 +1,13 @@
 {
     "cSpell.ignoreWords": [
         "spotcheck"
-    ]
+    ],
+
+        "workbench.colorCustomizations": {
+          "activityBar.background": "#f58a42",
+          "activityBarBadge.background":"#319965",
+          "activityBarBadge.foreground": "#ffc25f"
+        }
 }
+
+
