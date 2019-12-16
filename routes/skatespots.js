@@ -3,8 +3,8 @@ const router = express.Router();
 const createError = require('http-errors');
 const mongoose = require('mongoose');
 
-const User = require('../models/user');
-const SkateSpot = require('../models/skateSpot');
+const User = require('../models/User');
+const SkateSpot = require('../models/SkateSpot');
 
 // HELPER FUNCTIONS
 const {
