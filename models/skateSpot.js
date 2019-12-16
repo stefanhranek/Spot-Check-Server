@@ -6,7 +6,7 @@ const skateSpotSchema = new Schema(
     name: {type: String, required: true},
     type: {type: String, required: true, enum: ['park', 'street', 'diy']},
     status: {type: String, required: true, enum: ['active', 'WIP', 'RIP']},
-    indoor: {type: Boolean, required: true},
+    indoor: {type: String, required: true, enum: ['indoor', 'outdoor']},
     description: {type: String},
     images: [String],
     creator: {type: Schema.Types.ObjectId, ref:'User'},
