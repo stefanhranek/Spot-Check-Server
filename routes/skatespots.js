@@ -34,7 +34,7 @@ router.get('/favorites', isLoggedIn, (req, res, next) => {
 
     const userId = req.session.currentUser._id;
   
-    User.findById( userId )
+    User.findById( userId ).populate( 'favorites' )
       .then( (favoritesList) => {
         res.status(200).json( favoritesList );
       })
