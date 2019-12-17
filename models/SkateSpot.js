@@ -11,8 +11,8 @@ const skateSpotSchema = new Schema(
     images: [String],
     creator: {type: Schema.Types.ObjectId, ref:'User'},
     location: { 
-        lat: {type: mongoose.Decimal128, required: true},
-        lng: {type: mongoose.Decimal128, required: true}
+        lat: {type: mongoose.Decimal128, required: false},
+        lng: {type: mongoose.Decimal128, required: false}
      } 
   },
   {
