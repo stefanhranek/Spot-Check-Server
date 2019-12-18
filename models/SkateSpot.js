@@ -4,9 +4,9 @@ const Schema = mongoose.Schema;
 const skateSpotSchema = new Schema(
   {
     name: {type: String, required: true},
-    type: {type: String, required: true, enum: ['park', 'street', 'diy']},
-    status: {type: String, required: true, enum: ['active', 'WIP', 'RIP']},
-    indoor: {type: String, required: true, enum: ['indoor', 'outdoor']},
+    type: {type: String, required: true, enum: ['park', 'street', 'diy','Park', 'Street', 'DIY']},
+    status: {type: String, required: true, enum: ['active', 'WIP', 'RIP','Active', 'wip', 'rip']},
+    indoor: {type: String, required: true, enum: ['indoor', 'outdoor', 'Indoor', 'Outdoor']},
     description: {type: String},
     images: [String],
     creator: {type: Schema.Types.ObjectId, ref:'User'},
