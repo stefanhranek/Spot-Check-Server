@@ -10,10 +10,21 @@ const skateSpotSchema = new Schema(
     description: {type: String},
     images: [String],
     creator: {type: Schema.Types.ObjectId, ref:'User'},
-    location: { 
-        lat: {type: mongoose.Decimal128, required: false},
-        lng: {type: mongoose.Decimal128, required: false}
-     } 
+    // location: { 
+    //     lat: {type: mongoose.Decimal128, required: false},
+    //     lng: {type: mongoose.Decimal128, required: false}
+    //  } 
+    location: {
+      type: {
+        type: String, // Don't do `{ location: { type: String } }`
+        enum: ['Point'], // 'location.type' must be 'Point'
+        required: true
+      },
+      coordinates: {
+        type: [Number],
+        required: true
+      }
+    }
   },
   {
     timestamps: {
