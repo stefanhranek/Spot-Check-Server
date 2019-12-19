@@ -33,6 +33,7 @@ router.get('/', isLoggedIn, (req,res,next) => {
 router.get('/favorites', isLoggedIn, (req, res, next) => {
 
     const userId = req.session.currentUser._id;
+  console.log('USERID',  userId);
   
     User.findById( userId ).populate( 'favorites' )
       .then( (favoritesList) => {
@@ -48,7 +49,9 @@ router.get('/favorites', isLoggedIn, (req, res, next) => {
 //  GET    '/spot-details/:id'
 //  Show specific skate spot
 router.get('/spot-details/:id', isLoggedIn, (req,res,next) => {
-    const { id } = req.params;
+  
+  const { id } = req.params;
+
     SkateSpot.findById(id)
         .then((response) => {
             res.status(200).json(response)

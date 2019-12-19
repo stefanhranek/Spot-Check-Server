@@ -30,7 +30,7 @@ router.get('/:id', isLoggedIn, (req,res,next) => {
 //  Update current user profile
 router.put('/', isLoggedIn, async (req,res,next) => {
     const { _id } = req.session.currentUser;
-    const { username, password, city, image } = req.body;
+    const { username, password, city, email } = req.body;
 
     try {
         const usernameExists = await User.findOne( { username } );
@@ -39,7 +39,7 @@ router.put('/', isLoggedIn, async (req,res,next) => {
             return;
         }
         
-        const updatedUser = await User.findByIdAndUpdate( _id, { username, password, city, image }, {new: true} )
+        const updatedUser = await User.findByIdAndUpdate( _id, { username, password, city, email }, {new: true} )
         res.status(200).json(updatedUser)
 
 
