@@ -64,7 +64,8 @@ router.get('/spot-details/:id', isLoggedIn, (req,res,next) => {
 //  Create and save a new skate spot
   router.post('/', isLoggedIn, (req, res, next) => {
     const { name, type, status, indoor, description, location } = req.body;
-  
+    console.log('{ name, type, status, indoor, description, location }',{ name, type, status, indoor, description, location });
+    
     SkateSpot.create({ name, type, status, indoor, description, location })
     .then( (newSkateSpot) => {
         res.status(201).json( newSkateSpot );
