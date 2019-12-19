@@ -33,7 +33,6 @@ router.get('/', isLoggedIn, (req,res,next) => {
 router.get('/favorites', isLoggedIn, (req, res, next) => {
 
     const userId = req.session.currentUser._id;
-  console.log('USERID',  userId);
   
     User.findById( userId ).populate( 'favorites' )
       .then( (favoritesList) => {
@@ -42,7 +41,6 @@ router.get('/favorites', isLoggedIn, (req, res, next) => {
       .catch( (err) => {
         res.status(400).json(err);
       });
-  
   
   })
 
@@ -66,9 +64,7 @@ router.get('/spot-details/:id', isLoggedIn, (req,res,next) => {
 //  POST    '/'
 //  Create and save a new skate spot
   router.post('/', isLoggedIn, (req, res, next) => {
-    const { name, type, status, indoor, description, location } = req.body;
-    console.log('{ name, type, status, indoor, description, location }',{ name, type, status, indoor, description, location });
-    
+    const { name, type, status, indoor, description, location } = req.body;    
     SkateSpot.create({ name, type, status, indoor, description, location })
     .then( (newSkateSpot) => {
         res.status(201).json( newSkateSpot );
@@ -98,8 +94,6 @@ router.delete('/:id', isLoggedIn, (req, res, next) => {
       .catch( (err) => {
         res.status(400).json(err);
       });
-  
-  
   })
 
 

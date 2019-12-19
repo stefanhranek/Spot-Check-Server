@@ -12,23 +12,16 @@ const {
   validationLoggin,
 } = require('../helpers/middlewares');
 
-///////////////////////////////////////////////////////////////// Left here from boilerplate
-///////////////////////////////////////////////////////////////// unsure of its use
 //  GET    '/me'  
 router.get('/me', isLoggedIn, (req, res, next) => {
   req.session.currentUser.password = '*';
   res.json(req.session.currentUser);
 });
-////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////
 
 //  POST    '/signup'
 router.post('/signup', isNotLoggedIn, validationLoggin, async (req, res, next) => {
     const { username, password, email } = req.body;
-
-    console.log('skajfhashfjashkjf', req.body);
     
-
     try {
       // projection
       const usernameExists = await User.findOne({ username }, 'username');
