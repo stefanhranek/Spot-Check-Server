@@ -75,4 +75,25 @@ router.patch('/', isLoggedIn, (req,res,next) => {
 })
 
 
+router.patch('/remove', isLoggedIn, (req,res,next) => {
+
+
+  const { spotId } = req.body;
+
+  if (!mongoose.Types.ObjectId.isValid(spotId)) {
+    res.status(500).json({ message: 'Specified task id is invalid' });
+    return;
+  }
+
+  const userId = req.session.currentUser._id;
+
+  User.findByIdAndUpdate( userId, { $pull:{ favorites: spotId } }, {new: true} )
+    .then( (updatedUser) => {
+      res.status(201).json(updatedUser);
+    })
+    .catch( (err) => {
+      res.status(400).json(err);
+    });
+})
+
 module.exports = router;
