@@ -44,21 +44,19 @@ router.get("/profile", isLoggedIn, (req, res, next) => {
 router.put('/edit', isLoggedIn, (req,res,next) => {
   
   const  id  = req.session.currentUser._id;
-  console.log('IDDDDDDDDDDD', id);
-    const { username, password, city, email } = req.body;
-
-    console.log('IDDDDDDDDDDD', id);
-
-    // try {
-        // const usernameExists = await User.findOne( { username } );
-        // if (usernameExists) {
-        //     next(createError(400));
+  const { username, city, email } = req.body;
+  
+  // try {
+    // const usernameExists = await User.findOne( { username } );
+    // if (usernameExists) {
+      //     next(createError(400));
         //     return;
         // }
         
-        User.findByIdAndUpdate( id, { username, password, city, email }, {new: true} )
+        User.findByIdAndUpdate( id, { username, city, email }, {new: true} )
         .then(user => {
           res.status(201).json(user);
+          console.log('PASSWORD', user.password);
           console.log('USER', user);
           
           
