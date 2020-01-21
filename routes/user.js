@@ -17,36 +17,61 @@ const {
 
 //  GET    '/:id'  
 //  Get current user profile
-router.get('/:id', isLoggedIn, (req,res,next) => {
-    const { id } = req.params;
-    User.findById(id)
-        .then((response) => {
-            res.status(200).json(response)
-        })
-        .catch((err) => res.status(400).json(err))
-})
+// router.get('/:id', isLoggedIn, (req,res,next) => {
+//     const { id } = req.params;
+//     User.findById(id)
+//         .then((response) => {
+//             res.status(200).json(response)
+//         })
+//         .catch((err) => res.status(400).json(err))
+// })
+
+router.get("/profile", isLoggedIn, (req, res, next) => {
+  const id = req.session.currentUser._id;
+  User.findById(id)
+    .then(user => {
+      console.log("USERRRRRR", user);
+      res.status(200).json(user);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
 
 //  PUT    '/:id'
 //  Update current user profile
-router.put('/', isLoggedIn, async (req,res,next) => {
-    const { _id } = req.session.currentUser;
+
+router.put('/edit', isLoggedIn, (req,res,next) => {
+  
+  const  id  = req.session.currentUser._id;
+  console.log('IDDDDDDDDDDD', id);
     const { username, password, city, email } = req.body;
 
-    try {
-        const usernameExists = await User.findOne( { username } );
-        if (usernameExists) {
-            next(createError(400));
-            return;
-        }
+    console.log('IDDDDDDDDDDD', id);
+
+    // try {
+        // const usernameExists = await User.findOne( { username } );
+        // if (usernameExists) {
+        //     next(createError(400));
+        //     return;
+        // }
         
-        const updatedUser = await User.findByIdAndUpdate( _id, { username, password, city, email }, {new: true} )
-        res.status(200).json(updatedUser)
+        User.findByIdAndUpdate( id, { username, password, city, email }, {new: true} )
+        .then(user => {
+          res.status(201).json(user);
+          console.log('USER', user);
+          
+          
+        })
+        .catch(err => {
+          res.status(500).json(err);
+        })
 
 
-    }
-    catch (error) {
-        res.status(400).json(err)
-    }
+    // }
+    // .catch (error) {
+    //     res.status(400).json(err)
+    // }
 })
 
 
