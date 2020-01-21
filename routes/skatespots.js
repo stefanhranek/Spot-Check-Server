@@ -64,10 +64,22 @@ router.get('/spot-details/:id', isLoggedIn, (req,res,next) => {
 //  POST    '/'
 //  Create and save a new skate spot
   router.post('/', isLoggedIn, (req, res, next) => {
-    const { name, type, status, indoor, description, location } = req.body;    
-    SkateSpot.create({ name, type, status, indoor, description, location })
+    const { name, type, status, indoor, description, location } = req.body;  
+    const user = req.session.currentUser;  
+    SkateSpot.create({ creator: user, name, type, status, indoor, description, location })
     .then( (newSkateSpot) => {
-        res.status(201).json( newSkateSpot );
+      res.status(201).json( newSkateSpot );
+        User.findByIdAndUpdate(
+          user,
+          { $push: { mySpots: newSkateSpot } },
+          { new : true }
+          )
+        .then( response => {
+          console.log("response");
+        } )
+        .catch( err => {
+          console.log("error time", err);
+        } )
       })
       .catch( (err) => {
         res.status(400).json(err);
